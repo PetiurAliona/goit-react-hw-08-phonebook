@@ -1,0 +1,31 @@
+.button {
+  display: inline-block;
+  padding: 2px;
+  width: 65px;
+
+  cursor: pointer;
+  font-size: 14px;
+
+  background-color: #ffffff;
+
+  border: 1px solid grey;
+  border-radius: 3px;
+}
+
+.button:focus,
+.button:hover {
+  background-color: #6495ed;
+}
+
+.item {
+  min-width: 400px;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.text {
+  display: inline;
+  margin-right: 10px;
+}
