@@ -19,17 +19,17 @@ export const userReducer = createReducer(
     token: "",
   },
   {
-    [signUpSuccess]: (state, { payload }) => ({
+    [signUpSuccess]: (_, { payload }) => ({
       email: payload.user.email,
       name: payload.user.name,
       token: payload.token,
     }),
-    [signInSuccess]: (state, { payload }) => ({
+    [signInSuccess]: (_, { payload }) => ({
       email: payload.user.email,
       name: payload.user.name,
       token: payload.token,
     }),
-    [signOut]: (state) => ({
+    [signOut]: () => ({
       email: "",
       name: "",
       token: "",
@@ -52,6 +52,11 @@ export const loaderReducer = createReducer(false, {
   [signInError]: () => false,
 })
 
+export const isLoginReducer = createReducer(false, {
+  [signUpSuccess]: () => true,
+  [signInSuccess]: () => true,
+})
+
 const persistConfigAuth = {
   key: "auth",
   storage,
@@ -62,4 +67,5 @@ export const authReducer = combineReducers({
   user: persistReducer(persistConfigAuth, userReducer),
   error: errorReducer,
   isLoading: loaderReducer,
+  isLogIn: isLoginReducer,
 })
