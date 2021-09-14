@@ -20,7 +20,7 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(addContacts({ name, number }))
+    dispatch(addContacts({ name, number }, name))
     setName("")
     setNumber("")
   }

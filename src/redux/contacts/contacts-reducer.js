@@ -14,15 +14,9 @@ import {
   changeFilter,
 } from "./contacts-actions"
 
-const findName = function (contacts, payload) {
-  const isContact = contacts.some((item) => item.name === payload.name)
-  isContact && alert(`${payload.name} is already in contacts`)
-  return !isContact ? [...contacts, payload] : contacts
-}
-
 const items = createReducer([], {
   [getContactsSuccess]: (_, { payload }) => payload,
-  [addContactsSuccess]: (state, { payload }) => findName(state, payload),
+  [addContactsSuccess]: (state, { payload }) => [...state, payload],
   [deleteContactsSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
   [signOut]: () => [],
 })

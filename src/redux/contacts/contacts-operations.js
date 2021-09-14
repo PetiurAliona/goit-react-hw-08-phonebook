@@ -1,5 +1,6 @@
 import axios from "axios"
 import { authTokenSelector } from "../auth/auth-selectors"
+import { getContactsFromState } from "../contacts/contacts-selectors"
 
 import {
   getContactsRequest,
@@ -25,16 +26,32 @@ export const getContacts = () => async (dispatch, getState) => {
   }
 }
 
-export const addContacts = (contact) => async (dispatch, getState) => {
-  dispatch(addContactsRequest())
-  try {
-    const { data } = await axios.post(`/contacts`, contact, {
-      headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
-    })
-
-    dispatch(addContactsSuccess(data))
-  } catch (error) {
-    dispatch(addContactsError(error))
+export const addContacts = (contact, name) => async (dispatch, getState) => {
+  const items = getContactsFromState(getState())
+  if (items.length === 0) {
+    dispatch(addContactsRequest())
+    try {
+      const { data } = await axios.post(`/contacts`, contact, {
+        headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
+      })
+      dispatch(addContactsSuccess(data))
+    } catch (error) {
+      dispatch(addContactsError(error))
+    }
+  } else {
+    if (items.some((item) => item.name === name)) {
+      alert(`${name} is already in contacts`)
+    } else {
+      dispatch(addContactsRequest())
+      try {
+        const { data } = await axios.post(`/contacts`, contact, {
+          headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
+        })
+        dispatch(addContactsSuccess(data))
+      } catch (error) {
+        dispatch(addContactsError(error))
+      }
+    }
   }
 }
 
