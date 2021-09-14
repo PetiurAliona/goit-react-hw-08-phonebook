@@ -1,4 +1,5 @@
 import axios from "axios"
+import { authTokenSelector } from "../auth/auth-selectors"
 
 import {
   getContactsRequest,
@@ -16,20 +17,24 @@ import {
 
 // axios.defaults.baseURL = "https://connections-api.herokuapp.com"
 
-export const getContacts = () => async (dispatch) => {
+export const getContacts = () => async (dispatch, getState) => {
   dispatch(getContactsRequest())
   try {
-    const { data } = await axios.get(`/contacts`)
+    const { data } = await axios.get(`/contacts`, {
+      headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
+    })
     dispatch(getContactsSuccess(data))
   } catch (error) {
     dispatch(getContactsError(error))
   }
 }
 
-export const addContacts = (contact) => async (dispatch) => {
+export const addContacts = (contact) => async (dispatch, getState) => {
   dispatch(addContactsRequest())
   try {
-    const { data } = await axios.post(`/contacts`, contact)
+    const { data } = await axios.post(`/contacts`, contact, {
+      headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
+    })
 
     dispatch(addContactsSuccess(data))
   } catch (error) {
@@ -37,10 +42,12 @@ export const addContacts = (contact) => async (dispatch) => {
   }
 }
 
-export const deleteContact = (contactId) => async (dispatch) => {
+export const deleteContact = (contactId) => async (dispatch, getState) => {
   dispatch(deleteContactsRequest())
   try {
-    await axios.delete(`/contacts/${contactId}`)
+    await axios.delete(`/contacts/${contactId}`, {
+      headers: { Authorization: `Bearer ${authTokenSelector(getState())}` },
+    })
     dispatch(deleteContactsSuccess(contactId))
   } catch (error) {
     dispatch(deleteContactsError(error))

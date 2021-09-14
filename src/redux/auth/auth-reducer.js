@@ -1,52 +1,65 @@
-import { createReducer } from "@reduxjs/toolkit"
-import { combineReducers } from "redux"
+import { createReducer, combineReducers } from "@reduxjs/toolkit"
+import storage from "redux-persist/lib/storage"
+import { persistReducer } from "redux-persist"
+import {
+  resetError,
+  signInError,
+  signInRequest,
+  signInSuccess,
+  signUpError,
+  signUpRequest,
+  signUpSuccess,
+  signOut,
+} from "./auth-actions"
 
-import authOperations from "./auth-operations"
-
-const userData = createReducer(
-  {},
+export const userReducer = createReducer(
   {
-    [authOperations.register.fulfilled]: (_, { payload }) => payload.user,
-    [authOperations.logIn.fulfilled]: (_, { payload }) => payload.user,
-    [authOperations.fetchCurrentUser.fulfilled]: (_, { payload }) => payload,
-    [authOperations.register.rejected]: () => ({}),
-    [authOperations.logIn.rejected]: () => ({}),
-    [authOperations.fetchCurrentUser.rejected]: () => ({}),
-    [authOperations.logOut.fulfilled]: () => ({}),
+    email: "",
+    name: "",
+    token: "",
+  },
+  {
+    [signUpSuccess]: (state, { payload }) => ({
+      email: payload.user.email,
+      name: payload.user.name,
+      token: payload.token,
+    }),
+    [signInSuccess]: (state, { payload }) => ({
+      email: payload.user.email,
+      name: payload.user.name,
+      token: payload.token,
+    }),
+    [signOut]: (state) => ({
+      email: "",
+      name: "",
+      token: "",
+    }),
   }
 )
 
-const token = createReducer("", {
-  [authOperations.register.fulfilled]: (_, { payload }) => payload.token,
-  [authOperations.logIn.fulfilled]: (_, { payload }) => payload.token,
-  [authOperations.register.rejected]: () => "",
-  [authOperations.logIn.rejected]: () => "",
-  [authOperations.logOut.fulfilled]: () => "",
-  [authOperations.fetchCurrentUser.rejected]: () => "",
+export const errorReducer = createReducer("", {
+  [signUpError]: (_, { payload }) => payload,
+  [signInError]: (_, { payload }) => payload,
+  [resetError]: () => "",
 })
 
-const isLogIn = createReducer(false, {
-  [authOperations.register.fulfilled]: () => true,
-  [authOperations.logIn.fulfilled]: () => true,
-  [authOperations.fetchCurrentUser.fulfilled]: () => true,
-  [authOperations.register.pending]: () => false,
-  [authOperations.logIn.pending]: () => false,
-  [authOperations.fetchCurrentUser.pending]: () => false,
-  [authOperations.register.rejected]: () => false,
-  [authOperations.logIn.rejected]: () => false,
-  [authOperations.fetchCurrentUser.rejected]: () => false,
-  [authOperations.logOut.fulfilled]: () => false,
+export const loaderReducer = createReducer(false, {
+  [signUpRequest]: () => true,
+  [signUpSuccess]: () => false,
+  [signUpError]: () => false,
+  [signInRequest]: () => true,
+  [signInSuccess]: () => false,
+  [signInError]: () => false,
 })
 
-const isFetchingUser = createReducer(false, {
-  [authOperations.fetchCurrentUser.pending]: () => true,
-  [authOperations.fetchCurrentUser.rejected]: () => false,
-  [authOperations.fetchCurrentUser.fulfilled]: () => false,
-})
+const persistConfigAuth = {
+  key: "auth",
+  storage,
+  // whitelist: ["token"],
+}
 
-export default combineReducers({
-  userData,
-  token,
-  isLogIn,
-  isFetchingUser,
+export const authReducer = combineReducers({
+  user: persistReducer(persistConfigAuth, userReducer),
+  error: errorReducer,
+  isLoading: loaderReducer,
 })
