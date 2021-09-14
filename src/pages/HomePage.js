@@ -23,7 +23,6 @@ const HomePage = () => {
       <ContactForm />
       <h2>Contacts</h2>
       <Filter />
-      {/* <ContactsList /> */}
       {contacts?.length ? <ContactsList /> : !loading && <h3>Your phonebook is empty</h3>}
       {loading && <LoaderSpinner />}
     </>

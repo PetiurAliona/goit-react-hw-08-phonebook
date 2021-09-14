@@ -1,18 +1,9 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
 import contactsReducer from "./contacts/contacts-reducer"
 
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist"
+import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist"
 
 import { authReducer } from "./auth/auth-reducer"
-
-// const rootReducer = combineReducers({ contacts: contactsReducer })
-
-// const persistedReducer = persistReducer(persistConfigAuth, authReducer)
-
-// const store = configureStore({
-//   reducer: persistedReducer,
-//   devTools: process.env.NODE_ENV === "development",
-// })
 
 export const store = configureStore({
   reducer: {

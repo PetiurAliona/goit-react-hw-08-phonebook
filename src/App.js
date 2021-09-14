@@ -4,6 +4,7 @@ import { Route, Switch, useHistory } from "react-router-dom"
 
 import AuthNav from "./components/AuthNav/AuthNav"
 import HomePage from "./pages/HomePage"
+import NotFoundPage from "./pages/NotFoundPage"
 import RegisterPage from "./pages/RegisterPage"
 import { authTokenSelector } from "./redux/auth/auth-selectors"
 
@@ -20,7 +21,6 @@ const App = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <AuthNav />
         <Switch>
-          {/* {!isAuth ? <Redirect to="/login" /> : <Redirect to="/contacts" />} */}
           {isAuth && (
             <Route path="/contacts" exact>
               <HomePage />
@@ -37,7 +37,9 @@ const App = () => {
             </>
           )}
 
-          {/* <Route component={isAuth ? RegisterPage : HomePage} /> */}
+          <Route>
+            <NotFoundPage />
+          </Route>
         </Switch>
       </Suspense>
     </>

@@ -55,7 +55,7 @@ export const loaderReducer = createReducer(false, {
 const persistConfigAuth = {
   key: "auth",
   storage,
-  // whitelist: ["token"],
+  whitelist: ["token"],
 }
 
 export const authReducer = combineReducers({

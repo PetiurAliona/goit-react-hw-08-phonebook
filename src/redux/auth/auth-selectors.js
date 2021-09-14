@@ -1,5 +1,3 @@
-// export const getUsername = (state) => state.auth.userData.name
-
 export const authErrorSelector = (state) => state.auth.error
 export const authTokenSelector = (state) => state.auth.user.token
 export const authUserNameSelector = (state) => state.auth.user.name

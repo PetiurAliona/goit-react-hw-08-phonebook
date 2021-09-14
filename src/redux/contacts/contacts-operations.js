@@ -13,10 +13,6 @@ import {
   deleteContactsError,
 } from "./contacts-actions"
 
-// axios.defaults.baseURL = "http://localhost:4040"
-
-// axios.defaults.baseURL = "https://connections-api.herokuapp.com"
-
 export const getContacts = () => async (dispatch, getState) => {
   dispatch(getContactsRequest())
   try {
