@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router"
 import { signInOperation, signUpOperation } from "../../redux/auth/auth-operations"
+import styled from "./AuthForm.module.css"
 
 const initialState = {
   email: "",
@@ -31,8 +32,8 @@ const AuthForm = () => {
   const isSignUp = () => location.pathname === "/register"
 
   return (
-    <form onSubmit={onHandleSubmit}>
-      <label>
+    <form onSubmit={onHandleSubmit} className={styled.formWrapper}>
+      <label className={styled.formItem}>
         Email
         <input
           onChange={handleChangeInput}
@@ -41,9 +42,10 @@ const AuthForm = () => {
           name="email"
           placeholder="test@gmail.com"
           required
+          className={styled.input}
         />
       </label>
-      <label>
+      <label className={styled.formItem}>
         Password
         <input
           onChange={handleChangeInput}
@@ -52,10 +54,11 @@ const AuthForm = () => {
           value={user.password}
           placeholder="Enter your password"
           required
+          className={styled.input}
         />
       </label>
       {isSignUp() && (
-        <label>
+        <label className={styled.formItem}>
           Name
           <input
             onChange={handleChangeInput}
@@ -64,11 +67,14 @@ const AuthForm = () => {
             name="name"
             placeholder="Enter your name"
             required
+            className={styled.input}
           />
         </label>
       )}
 
-      <button type="submit">SignIn</button>
+      <button className={styled.formBtn} type="submit">
+        SignIn
+      </button>
     </form>
   )
 }

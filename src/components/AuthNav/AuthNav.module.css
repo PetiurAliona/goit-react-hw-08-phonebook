@@ -1,0 +1,40 @@
+.authWrapper {
+  height: 50px;
+  background-color: rgb(212, 212, 252);
+  list-style: none;
+  padding: 10px;
+}
+
+.authLink {
+  text-decoration: none;
+  color: black;
+}
+
+.authLink:hover {
+  color: #5875ac;
+}
+
+.active {
+  color: #264e99;
+}
+
+.btnExit {
+  display: block;
+  width: 80px;
+  cursor: pointer;
+  margin-left: 300px;
+
+  font-size: 13px;
+
+  background-color: #ffffff;
+
+  border: 1px solid grey;
+  border-radius: 3px;
+  margin-top: 0px;
+  padding: 4px;
+}
+
+.btnExit:focus,
+.btnExit:hover {
+  background-color: #6495ed;
+}

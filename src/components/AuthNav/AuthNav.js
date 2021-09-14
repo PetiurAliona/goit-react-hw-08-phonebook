@@ -5,6 +5,7 @@ import { authIsLoginSelector, authTokenSelector, authUserNameSelector } from "..
 
 import { toast } from "react-toastify"
 import { useEffect } from "react"
+import styled from "./AuthNav.module.css"
 
 const AuthNav = () => {
   const isAuth = useSelector(authTokenSelector)
@@ -20,16 +21,16 @@ const AuthNav = () => {
   }, [isLogin])
 
   return (
-    <ul>
+    <ul className={styled.authWrapper}>
       {!isAuth && (
         <>
           <li>
-            <NavLink to="/register" exact>
+            <NavLink to="/register" className={styled.authLink} activeClassName={styled.active} exact>
               Register
             </NavLink>
           </li>
           <li>
-            <NavLink to="/login" exact>
+            <NavLink to="/login" className={styled.authLink} activeClassName={styled.active} exact>
               LogIn
             </NavLink>
           </li>
@@ -39,12 +40,12 @@ const AuthNav = () => {
       {isAuth && (
         <>
           <li>
-            <NavLink to="/contacts" exact>
+            <NavLink to="/contacts" className={styled.authLink} activeClassName={styled.active} exact>
               Contacts
             </NavLink>
           </li>
           <li>
-            <button type="button" onClick={exit}>
+            <button type="button" className={styled.btnExit} onClick={exit}>
               LogOut
             </button>
           </li>
